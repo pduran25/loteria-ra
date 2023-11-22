@@ -18,8 +18,8 @@ const LandingPage = () => {
   var source = "";
   var source2 = "";
 
-  source = "./assets/coco/coco1.glb";
-  source2 = "./assets/coco/coco1.usdz";
+  source = "./assets/coco/";
+  source2 = "./assets/coco/";
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
