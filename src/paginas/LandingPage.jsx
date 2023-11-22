@@ -18,6 +18,11 @@ const LandingPage = () => {
   var source = "";
   var source2 = "";
 
+  const search = window.location.search;
+  const params = new URLSearchParams(search);
+  const codigo = params.get('animacion');
+  console.log("animacion numero: "+codigo);
+
   source = "./assets/coco/";
   source2 = "./assets/coco/";
 
