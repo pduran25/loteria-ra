@@ -1,19 +1,28 @@
 import React, { useState } from 'react';
 import sound from '/assets/chiverito.mp3';
 import styled from 'styled-components';
+import backgroundImage from '../assets/fondofinal.png';
+import nombreapellido from '../assets/nombreapellido.png';
+import celular from '../assets/celular.png';
+import cuenta from '../assets/instagram.png';
+import ciudad from '../assets/ciudad.png';
+import btnenviar from '../assets/btnenviar.png';
+import regalo from '../assets/regalo.png';
+import base from '../assets/base.png';
+import logoImage from '../assets/logoImage.png';
+import parteImage from '../assets/parteImage.png';
+
 
 const LandingPage = () => {
 
   const [enviadoExitosamente, setEnviadoExitosamente] = useState(false);
 
   const [formData, setFormData] = useState({
-    cedula: '',
     nombres: '',
-    apellidos: '',
-    correo: '',
-    telefono: '',
-    redSocial: 'Facebook', 
+    celular: '',
     cuenta: '',// Valor predeterminado
+    ciudad: '', 
+    animacion: 0
   });
   var source = "";
   var source2 = "";
@@ -23,8 +32,8 @@ const LandingPage = () => {
   const codigo = params.get('animacion');
   console.log("animacion numero: "+codigo);
 
-  source = "./assets/coco/";
-  source2 = "./assets/coco/";
+  source = "./assets/coco/coco1.glb";
+  source2 = "./assets/coco/coco1.usdz";
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
@@ -49,37 +58,41 @@ const LandingPage = () => {
     e.preventDefault();
 
     // Validación de campos (puedes personalizar esto según tus necesidades)
-    if (!formData.cedula || !formData.nombres || !formData.apellidos || !formData.correo || !formData.telefono || !formData.redSocial || !formData.cuenta) {
+    if (!formData.nombres || !formData.celular || !formData.cuenta || !formData.ciudad) {
       alert('Todos los campos son obligatorios');
       return;
-    }
-
-    try {
-      // Envío de datos al servidor
-      const response = await fetch('http://192.168.1.3:5173/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      // Verificar la respuesta del servidor
-      if (response.ok) {
-        setEnviadoExitosamente(true);
-        // Puedes manejar la respuesta del servidor aquí, por ejemplo, redirigiendo a otra página
-       // history.push('/pagina-limpia');
-
-      } else {
-        // Manejar errores de respuesta del servidor
-        console.log("ingreso al error");
-        setEnviadoExitosamente(true);
+    }else{
+      try {
+        // Envío de datos al servidor
+        console.log("entra al envio");
+        formData.animacion = codigo;
+        const response = await fetch('https://app.cotzul.com/Otros/registroloteria.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+  
+        // Verificar la respuesta del servidor
+        if (response.ok) {
+          setEnviadoExitosamente(true);
+          // Puedes manejar la respuesta del servidor aquí, por ejemplo, redirigiendo a otra página
+         // history.push('/pagina-limpia');
+  
+        } else {
+          // Manejar errores de respuesta del servidor
+          console.log("ingreso al error");
+         
+        }
+      } catch (error) {
+        // Manejar errores de red o del lado del cliente
+        console.error('Error de red o del lado del cliente', error);
+        
       }
-    } catch (error) {
-      // Manejar errores de red o del lado del cliente
-      console.error('Error de red o del lado del cliente', error);
-      setEnviadoExitosamente(true);
     }
+
+    
 
 
     // Aquí puedes realizar acciones adicionales con los datos del formulario
@@ -87,65 +100,162 @@ const LandingPage = () => {
   };
 
   return (
-    <div>
-      <h1>Landing Page</h1>
-      {(enviadoExitosamente)?(<div>
-        <h1>¡Envío Exitoso!</h1>
-        <p>Gracias por registrarte. Tu formulario se ha enviado exitosamente.</p>
-        <div className="App">
-<model-viewer src={source} ios-src={source2} camera-controls camera-orbit="-40deg 70deg 200m" camera-target="0 0 0" ar ar-modes="scene-viewer webxr quick-look" xr-environment ar-placement="wall" autoplay>
-
-        <SoundButton
-        src={isAudioPlaying ? './assets/audio.png' : './assets/sinaudio.png'}
-        alt={isAudioPlaying ? 'Sonido inactivo' : 'Sonido activo'}
-        onClick={toggleAudio}
+    
+      <>
+      {(enviadoExitosamente)?((codigo!=null)?
+        (<div style={{
+          background: `url(${backgroundImage}) repeat fixed center center / cover`,
+          height: '100%',
+          justifyContent: 'center',
+          flexDirection: 'column',
+          alignItems: 'center',
+        }}>
+      <div style={{ marginBottom: '20px' }}>
+        <div style={{ marginBottom: '20px' }}>
+      <img
+        src={logoImage}
+        alt="Logo"
+        style={{ width: '100vw' }}
       />
+      </div>
+        <h1 style={{ textAlign: 'center', color: '#FFF' }}>¡Envío Exitoso!</h1>
+        <p style={{ textAlign: 'center', color: '#FFF'  }}>Gracias por registrarte. Tomate la foto con Guachito y súbelo a tu Instagram.</p>
+        <div className="App" style={{ width: '100%', height: '100%' }}>
+        <model-viewer
+          src={source}
+          ios-src={source2}
+          camera-controls
+          camera-orbit="-40deg 70deg 200m"
+          camera-target="0 0 0"
+          ar
+          ar-modes="scene-viewer webxr quick-look"
+          xr-environment
+          ar-placement="wall"
+          autoplay
+        >
 
-      <audio id="myAudio" src={sound} loop/>
 
-
-        <Boton slot="ar-button" >
-          Click Aquí
-        </Boton>
-  </model-viewer>
-    </div>
-      </div>):(<form onSubmit={handleSubmit}>
-        <label>Cédula:
-          <input type="text" name="cedula" value={formData.cedula} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>Nombres:
-          <input type="text" name="nombres" value={formData.nombres} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>Apellidos:
-          <input type="text" name="apellidos" value={formData.apellidos} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>Correo Electrónico:
-          <input type="email" name="correo" value={formData.correo} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>Número Telefónico:
-          <input type="tel" name="telefono" value={formData.telefono} onChange={handleInputChange} />
-        </label>
-        <br />
-        <label>Red Social:
-          <select name="redSocial" value={formData.redSocial} onChange={handleInputChange}>
-            <option value="Facebook">Facebook</option>
-            <option value="Instagram">Instagram</option>
-            <option value="TikTok">TikTok</option>
-          </select>
-        </label>
-        <br />
-        <label>Cuenta Red social:
-          <input type="text" name="cuenta" value={formData.cuenta} onChange={handleInputChange} />
-        </label>
-        <br />
-        <button type="submit">Registrarse</button>
-      </form>)}
+          <Boton slot="ar-button">
+            Ingresa
+          </Boton>
+        </model-viewer>
+      </div>
+      </div></div>):(<div></div>)):((codigo!=null)?(<div style={{
+        background: `url(${backgroundImage}) repeat fixed center center / cover`,
+        height: '100%',
+        display: 'flex',
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center',
+      }}><div
+       
+    ><form style={{ // Ajusta el ancho del formulario según tus necesidades
+      padding: '0px',
+      backgroundColor: 'rgba(255, 255, 255, 0)', // Fondo semi-transparente para mayor legibilidad
+    }} onSubmit={handleSubmit}>
+      <div style={{ marginBottom: '20px' }}>
+      <img
+        src={logoImage}
+        alt="Logo"
+        style={{ width: '100vw' }}
+      />
+      </div>
+      <div style={{ marginBottom: '20px' }}>
+      <img
+        src={parteImage}
+        alt="parteImage"
+        style={{ width: '100vw'}}
+      />
+      </div>
+      <div style={{ position: 'relative', marginBottom: '20px' }}>
+          <img src={nombreapellido} alt="Nombres y Apellidos" style={{ width: '100vw' }} />
+          <input
+            type="text"
+            name="nombres"
+            value={formData.nombres}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0)',
+              position: 'absolute',
+              bottom: '0',
+              left: '12%', // Ajusta la posición del campo de entrada en la imagen
+              right: '12%', // Ajusta la posición del campo de entrada en la imagen
+              width: '80%', // Ajusta el ancho del campo de entrada en la imagen
+              border: 'none', // Elimina el borde
+              outline: 'none', // Elimina el contorno de enfoque
+              fontSize: '2em'
+            }}
+          />
+        </div>
+        <div style={{ position: 'relative', marginBottom: '20px' }}>
+          <img src={celular} alt="Celular" style={{ width: '100vw' }} />
+          <input
+            type="tel"
+            name="celular"
+            value={formData.celular}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0)',
+              position: 'absolute',
+              bottom: '0',
+              left: '12%', // Ajusta la posición del campo de entrada en la imagen
+              width: '80%', // Ajusta el ancho del campo de entrada en la imagen
+              border: 'none', // Elimina el borde
+              outline: 'none', // Elimina el contorno de enfoque
+              fontSize: '2em'
+            }}
+          />
+        </div>
+        <div style={{ position: 'relative', marginBottom: '20px' }}>
+          <img src={cuenta} alt="Cuenta" style={{ width: '100vw' }} />
+          <input
+            type="text"
+            name="cuenta"
+            value={formData.cuenta}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0)',
+              position: 'absolute',
+              bottom: '0',
+              left: '12%', // Ajusta la posición del campo de entrada en la imagen
+              width: '80%', // Ajusta el ancho del campo de entrada en la imagen
+              border: 'none', // Elimina el borde
+              outline: 'none', // Elimina el contorno de enfoque
+              fontSize: '2em'
+            }}
+          />
+        </div>
+        <div style={{ position: 'relative', marginBottom: '20px' }}>
+          <img src={ciudad} alt="Ciudad" style={{ width: '100vw' }} />
+          <input
+            type="text"
+            name="ciudad"
+            value={formData.ciudad}
+            onChange={handleInputChange}
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0)',
+              position: 'absolute',
+              bottom: '0',
+              left: '12%', // Ajusta la posición del campo de entrada en la imagen
+              width: '80%', // Ajusta el ancho del campo de entrada en la imagen
+              border: 'none', // Elimina el borde
+              outline: 'none', // Elimina el contorno de enfoque
+              fontSize: '2em'
+            }}
+          />
+        </div>
+        <img
+          src={btnenviar}
+          alt="Enviar"
+          style={{ cursor: 'pointer', width: '100vw', marginBottom: '350px' }}
+          onClick={handleSubmit}
+        />
+       
       
-    </div>
+      </form></div></div>):(<div></div>))}
+      </>
+    
+    
   );
 };
 
@@ -160,28 +270,24 @@ const Boton = styled.button`
 display: inline-block;
 border: none;
 border-radius: 4px;
-background-color: #0088cc;
+background-color: #006a22;
 color: #fff;
-padding: 12px 24px;
+width: 70%;
+margin: 15%;
+margin-top: 0;
 font-size: 16px;
 font-weight: bold;
 text-align: center;
 text-decoration: none;
 cursor: pointer;
-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-transition: background-color 0.3s ease;
-position: absolute; 
-right: 100px; 
-left: 100px;
-
-bottom: 100px; 
+alignItems: 'center',
 
 &:hover {
-  background-color: #006699;
+  background-color: #006a22;
 }
 
 &:focus {
   outline: none;
-  background-color: #004466;
+  background-color: #006a22;
 }
 `;
