@@ -78,7 +78,7 @@ const LandingPage = () => {
         // Verificar la respuesta del servidor
         if (response.ok) {
           setEnviadoExitosamente(true);
-          window.location.href = 'animacion=5';
+          window.location.href = '?animacion=5';
           //history.push('https://navidadextraordinaria-loteria.netlify.app/?animacion=5');
           // Puedes manejar la respuesta del servidor aquí, por ejemplo, redirigiendo a otra página
          // history.push('/pagina-limpia');
