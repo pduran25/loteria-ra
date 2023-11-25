@@ -11,12 +11,13 @@ import regalo from '../assets/regalo.png';
 import base from '../assets/base.png';
 import logoImage from '../assets/logoImage.png';
 import parteImage from '../assets/parteImage.png';
+import { useHistory } from 'react-router-dom';
 
 
 const LandingPage = () => {
 
   const [enviadoExitosamente, setEnviadoExitosamente] = useState(false);
-
+  const history = useHistory();
   const [formData, setFormData] = useState({
     nombres: '',
     celular: '',
@@ -77,6 +78,7 @@ const LandingPage = () => {
         // Verificar la respuesta del servidor
         if (response.ok) {
           setEnviadoExitosamente(true);
+          history.push('https://navidadextraordinaria-loteria.netlify.app/?animacion=4');
           // Puedes manejar la respuesta del servidor aquí, por ejemplo, redirigiendo a otra página
          // history.push('/pagina-limpia');
   
@@ -102,7 +104,7 @@ const LandingPage = () => {
   return (
     
       <>
-      {(enviadoExitosamente)?((codigo!=null)?
+      {(enviadoExitosamente || codigo == 5)?((codigo!=null)?
         (<div style={{
           background: `url(${backgroundImage}) repeat fixed center center / cover`,
           height: '100%',
