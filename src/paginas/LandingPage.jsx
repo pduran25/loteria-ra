@@ -35,9 +35,12 @@ const LandingPage = () => {
   console.log("animacion numero: "+codigo);
 
 
-  if(codigo == 1 || codigo == 3){
+  if(codigo == 1){
     source = "./assets/guacho9.glb";
     source2 = "./assets/guacho9.usdz";
+  }else if(codigo == 3){
+    source = "./assets/guachocarta1.glb";
+    source2 = "./assets/guachocarta1.usdz";
   }else if(codigo == 2 || codigo == 4){
     source = "./assets/guachosorpresa1.glb";
     source2 = "./assets/guachosorpresa1.usdz";
