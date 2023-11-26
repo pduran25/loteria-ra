@@ -31,6 +31,7 @@ const LandingPage = () => {
   const search = window.location.search;
   const params = new URLSearchParams(search);
   const codigo = params.get('animacion');
+  const paso = params.get('paso');
   console.log("animacion numero: "+codigo);
 
 
@@ -84,7 +85,7 @@ const LandingPage = () => {
         // Verificar la respuesta del servidor
         if (response.ok) {
           setEnviadoExitosamente(true);
-          window.location.href = '?animacion=5';
+          window.location.href = '?animacion='+codigo+"&paso=1";
           //history.push('https://navidadextraordinaria-loteria.netlify.app/?animacion=5');
           // Puedes manejar la respuesta del servidor aquí, por ejemplo, redirigiendo a otra página
          // history.push('/pagina-limpia');
@@ -111,7 +112,7 @@ const LandingPage = () => {
   return (
     
       <>
-      {(enviadoExitosamente || codigo == 5)?((codigo!=null)?
+      {(enviadoExitosamente || paso == 1)?((codigo!=null)?
         (<div style={{
           background: `url(${backgroundImage}) repeat fixed center center / cover`,
           height: '100%',
