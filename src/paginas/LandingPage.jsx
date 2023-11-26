@@ -33,8 +33,8 @@ const LandingPage = () => {
   const codigo = params.get('animacion');
   console.log("animacion numero: "+codigo);
 
-  source = "./assets/guacho6.glb";
-  source2 = "./assets/guacho6.usdz";
+  source = "./assets/guacho7.glb";
+  source2 = "./assets/guacho7.usdz";
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
 
