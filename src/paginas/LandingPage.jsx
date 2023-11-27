@@ -42,8 +42,8 @@ const LandingPage = () => {
     source = "./assets/guachosorpresa3.glb";
     source2 = "./assets/guachosorpresa3.usdz";
   }else if(codigo == 3){
-    source = "./assets/guachocarta2.glb";
-    source2 = "./assets/guachocarta2.usdz";
+    source = "./assets/guachocarta3.glb";
+    source2 = "./assets/guachocarta3.usdz";
   }else if(codigo == 4){
     source = "./assets/guachoarbol1.glb";
     source2 = "./assets/guachoarbol1.usdz";
