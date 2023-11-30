@@ -36,17 +36,17 @@ const LandingPage = () => {
 
 
   if(codigo == 1){
-    source = "./assets/guacho9.glb";
-    source2 = "./assets/guacho9.usdz";
+    source = "./assets/guachosaco.glb";
+    source2 = "./assets/guachosaco.usdz";
   }else if(codigo == 2){
-    source = "./assets/guachosorpresa3.glb";
-    source2 = "./assets/guachosorpresa3.usdz";
+    source = "./assets/guachosorpresa.glb";
+    source2 = "./assets/guachosorpresa.usdz";
   }else if(codigo == 3){
-    source = "./assets/guachocarta3.glb";
-    source2 = "./assets/guachocarta3.usdz";
+    source = "./assets/guachocarta.glb";
+    source2 = "./assets/guachocarta.usdz";
   }else if(codigo == 4){
-    source = "./assets/guachoarbol1.glb";
-    source2 = "./assets/guachoarbol1.usdz";
+    source = "./assets/guachitoarbol.glb";
+    source2 = "./assets/guachitoarbol.usdz";
   }
 
   const [isAudioPlaying, setIsAudioPlaying] = useState(false);
